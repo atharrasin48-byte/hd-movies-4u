@@ -1,58 +1,82 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="HD MOVIES 4U — discover movie information, ratings and authorized streaming sources.">
-<meta name="theme-color" content="#101114">\n<link rel="icon" type="image/png" sizes="128x128" href="/favicon.png">\n<link rel="apple-touch-icon" href="/favicon.png">
-<title>HD MOVIES 4U — Movie Discovery</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="HD MOVIES 4U — discover movie information, genres, ratings and authorized viewing sources.">
+<meta name="theme-color" content="#101114">
+<link rel="icon" type="image/png" sizes="128x128" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
+<title>HD MOVIES 4U — Movies Catalogue</title>
 <style>
-:root{color-scheme:dark;--bg:#101114;--panel:#191b20;--muted:#a4a7b0;--red:#e53945;--green:#35bd83}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#f5f5f6;font:15px/1.5 system-ui,Arial,sans-serif}
-header{position:sticky;top:0;z-index:5;background:#101114ed;border-bottom:1px solid #292b31;backdrop-filter:blur(12px)}
-.wrap{max-width:1160px;margin:auto;padding:16px 20px}.top{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
-.logo{font-size:22px;font-weight:900;letter-spacing:.5px}.logo b{color:var(--red)}
-nav{display:flex;gap:8px;flex-wrap:wrap}button,.chip{border:1px solid #343740;background:#202229;color:#eee;border-radius:999px;padding:9px 14px;cursor:pointer}
-button:hover,.chip.active{background:var(--red);border-color:var(--red)}.search{margin-left:auto;min-width:210px;flex:1;max-width:330px;background:#202229;border:1px solid #363942;color:white;padding:11px 14px;border-radius:12px}
-.hero{margin-top:24px;padding:34px;border-radius:20px;background:linear-gradient(115deg,#2b151b,#171a22 62%,#123027);border:1px solid #3a3038}
-.hero h1{font-size:clamp(30px,5vw,48px);line-height:1.05;margin:0 0 12px}.hero p{color:#d0d0d5;max-width:620px}.tag{color:#ff6873;font-weight:800;letter-spacing:2px;font-size:12px}
-section{margin:28px 0}.section-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.section-head h2{font-size:21px;margin:0}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:16px;margin-top:16px}
-.card{background:var(--panel);border:1px solid #2b2e36;border-radius:14px;overflow:hidden;cursor:pointer;transition:.18s}.card:hover{transform:translateY(-3px);border-color:#686d78}
-.poster{height:220px;display:grid;place-items:center;text-align:center;padding:14px;background:linear-gradient(145deg,#333b4c,#24232d 55%,#4a2028);font-size:19px;font-weight:800}
-.card:nth-child(3n) .poster{background:linear-gradient(145deg,#1d4840,#24232d 60%,#453027)}
+:root{color-scheme:dark;--bg:#0d0f13;--panel:#171a20;--muted:#a4a9b4;--red:#ed344b;--line:#292e38}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#f5f6f8;font:15px/1.5 system-ui,Arial,sans-serif}
+a{color:inherit;text-decoration:none}.wrap{width:min(1160px,100%);margin:auto;padding:16px 20px}
+header{position:sticky;top:0;z-index:5;background:#0d0f13ed;border-bottom:1px solid var(--line);backdrop-filter:blur(12px)}
+.top{display:flex;align-items:center;gap:16px;flex-wrap:wrap}.logo{font-size:22px;font-weight:950;letter-spacing:.4px;white-space:nowrap}.logo b{color:var(--red)}
+.home{border:1px solid #3a3f49;background:#1b1e25;color:#e9ebef;border-radius:10px;padding:9px 12px;font-weight:650}
+nav{display:flex;gap:7px;flex-wrap:wrap}.chip{border:1px solid #343944;background:#1b1e25;color:#d8dbe1;border-radius:999px;padding:8px 12px;cursor:pointer;font:inherit;font-size:13px}
+.chip:hover,.chip.active{background:var(--red);border-color:var(--red);color:white}
+.search{margin-left:auto;min-width:190px;flex:1;max-width:280px;background:#1b1e25;border:1px solid #363c47;color:white;padding:11px 13px;border-radius:11px;font:inherit}
+.hero{position:relative;overflow:hidden;margin-top:24px;padding:clamp(24px,5vw,42px);border:1px solid #49303a;border-radius:20px;background:radial-gradient(ellipse at 90% 10%,#4b1e2b 0,transparent 42%),linear-gradient(115deg,#25151d,#171a22 62%,#122a25)}
+.tag{color:#ff7786;font-size:11px;font-weight:850;letter-spacing:2px}.hero h1{font-size:clamp(32px,6vw,52px);line-height:1.06;margin:12px 0}.hero p{color:#c9cbd2;max-width:620px;margin:0}
+section{margin:30px 0}.section-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.section-head h2{font-size:21px;margin:0}.muted{color:var(--muted);font-size:13px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:15px;margin-top:16px}
+.card{display:block;background:var(--panel);border:1px solid #292e38;border-radius:14px;overflow:hidden;transition:transform .18s,border-color .18s}
+.card:hover{transform:translateY(-4px);border-color:#777e8b}.poster{height:218px;display:flex;align-items:flex-end;justify-content:flex-start;text-align:left;padding:15px;background:linear-gradient(145deg,#354154,#24232d 55%,#4a202b);position:relative;isolation:isolate}
+.poster:before{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#090b10d9,transparent 78%);z-index:-1}
+.card:nth-child(3n) .poster{background:linear-gradient(145deg,#1d5145,#24232d 60%,#453027)}
 .card:nth-child(3n+1) .poster{background:linear-gradient(145deg,#51333b,#24232d 60%,#202e48)}
-.meta{padding:11px}.meta strong{display:block}.muted{color:var(--muted);font-size:13px}
-.pill{display:inline-block;color:#b9f2d7;background:#173a2d;border-radius:6px;padding:2px 7px;font-size:11px;margin-top:7px}
-footer{border-top:1px solid #292b31;color:var(--muted);margin-top:44px}
-dialog{background:#191b20;color:white;border:1px solid #444;border-radius:18px;width:min(600px,calc(100% - 24px));padding:22px}
-dialog::backdrop{background:#000b}.detail-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}.primary{background:var(--red);border-color:var(--red)}.notice{border:1px solid #594b28;background:#292416;padding:12px;border-radius:10px;color:#f0dca5;margin-top:14px;font-size:13px}
-@media(max-width:600px){.wrap{padding:13px}.hero{padding:23px}.poster{height:190px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}}
+.poster-title{font-size:20px;font-weight:900;line-height:1.15;text-shadow:0 2px 8px #000}
+.meta{padding:11px 12px 13px}.meta strong{display:block;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.meta-line{display:flex;justify-content:space-between;gap:6px;margin-top:4px}
+.pill{display:inline-block;color:#c5f5df;background:#173a2d;border-radius:6px;padding:2px 7px;font-size:11px;margin-top:8px}
+.empty{display:none;padding:28px 16px;text-align:center;border:1px dashed #454b57;border-radius:14px;color:#c5c9d2;margin-top:16px}
+.about{padding:19px;border:1px solid var(--line);border-radius:14px;background:#14171d}.about h2{margin:0 0 7px;font-size:19px}
+footer{border-top:1px solid var(--line);color:var(--muted);margin-top:40px}
+@media(max-width:700px){.wrap{padding:13px}.top{gap:10px}.search{order:3;max-width:none;flex-basis:100%;margin:0}nav{order:4;flex-wrap:nowrap;overflow-x:auto;width:100%;padding-bottom:4px}.chip{white-space:nowrap}.hero{margin-top:17px}.poster{height:190px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}}
 </style>
 </head>
 <body>
-<header><div class="wrap top"><div class="logo">HD <b>MOVIES</b> 4U</div>
-<nav><button class="chip active" data-cat="All">All</button><button class="chip" data-cat="Bangla">Bangla</button><button class="chip" data-cat="Hindi">Hindi</button><button class="chip" data-cat="English">English</button><button class="chip" data-cat="Korean">Korean</button><button class="chip" data-cat="South Indian">South Indian</button><button class="chip" data-cat="Animation">Animation</button></nav>
-<input id="search" class="search" placeholder="Search movies..." aria-label="Search movies"></div></header>
+<header><div class="wrap top">
+<a class="logo" href="index.html">HD <b>MOVIES</b> 4U</a>
+<a class="home" href="index.html">⌂ Home</a>
+<nav aria-label="Filter by language">
+<button class="chip active" data-cat="All">All</button><button class="chip" data-cat="Bangla">Bangla</button><button class="chip" data-cat="Hindi">Hindi</button><button class="chip" data-cat="English">English</button><button class="chip" data-cat="Korean">Korean</button><button class="chip" data-cat="South Indian">South Indian</button><button class="chip" data-cat="Animation">Animation</button>
+</nav>
+<input id="search" class="search" type="search" placeholder="Search movies..." aria-label="Search movies">
+</div></header>
 <main class="wrap">
-<div class="hero"><div class="tag">DISCOVER • EXPLORE • WATCH LEGALLY</div><h1>Your movie universe.</h1><p>Explore movie details, ratings, cast, release dates and official trailers. Find authorized streaming options from trusted providers.</p></div>
-<section><div class="section-head"><h2>Recently Added</h2><span class="muted" id="count"></span></div><div class="grid" id="grid"></div></section>
-<section><h2>About HD MOVIES 4U</h2><p class="muted">A movie discovery catalogue. This starter version uses sample entries; replace them with accurate metadata and artwork you own or are licensed to use. Streaming and download links must be authorized by the rights holder.</p></section>
+<div class="hero"><div class="tag">WELCOME TO HD MOVIES 4U</div><h1>Find your next favourite.</h1><p>Explore movie and series information, genres, ratings and details. Choose a title to see its information and find authorized viewing options.</p></div>
+<section><div class="section-head"><h2>Movie Catalogue</h2><span class="muted" id="count" aria-live="polite"></span></div><div class="grid" id="grid"></div><div class="empty" id="empty">No titles found. Try another name or category.</div></section>
+<section class="about"><h2>About HD MOVIES 4U</h2><p class="muted">This catalogue preview uses fictional sample entries. Verified movie information, licensed artwork and authorized viewing links will be added before public launch. This website does not host unauthorized movie files.</p></section>
 </main>
-<footer><div class="wrap">© <span id="year"></span> HD MOVIES 4U · Movie information and official sources only.</div></footer>
-<dialog id="details"><button id="close" style="float:right">Close ✕</button><div id="detailBody"></div></dialog>
+<footer><div class="wrap">© <span id="year"></span> HD MOVIES 4U · Movie discovery catalogue</div></footer>
 <script>
 const movies=[
-{title:"The Last Horizon",language:"English",genre:"Adventure / Drama",year:2025,rating:"8.1",director:"Sample Director",cast:"Sample Cast",story:"A fictional sample entry for demonstrating the movie catalogue.",trailer:"https://www.youtube.com/" ,source:"https://www.justwatch.com/"},
-{title:"নীল আকাশ",language:"Bangla",genre:"Drama",year:2025,rating:"7.8",director:"Sample Director",cast:"Sample Cast",story:"এটি ওয়েবসাইটের নকশা দেখানোর জন্য একটি কাল্পনিক নমুনা।",trailer:"https://www.youtube.com/",source:"https://www.justwatch.com/"},
-{title:"Mumbai Stories",language:"Hindi",genre:"Thriller",year:2024,rating:"7.6",director:"Sample Director",cast:"Sample Cast",story:"A fictional sample entry. Replace with verified film information.",trailer:"https://www.youtube.com/",source:"https://www.justwatch.com/"},
-{title:"Seoul Days",language:"Korean",genre:"Romance / Drama",year:2024,rating:"8.0",director:"Sample Director",cast:"Sample Cast",story:"A fictional sample entry for the Korean category.",trailer:"https://www.youtube.com/",source:"https://www.justwatch.com/"},
-{title:"Southern Star",language:"South Indian",genre:"Action / Drama",year:2025,rating:"7.9",director:"Sample Director",cast:"Sample Cast",story:"A fictional sample entry for the South Indian category.",trailer:"https://www.youtube.com/",source:"https://www.justwatch.com/"},
-{title:"Little Cloud",language:"Animation",genre:"Animation / Family",year:2025,rating:"8.3",director:"Sample Director",cast:"Sample Cast",story:"A fictional sample animated-film entry.",trailer:"https://www.youtube.com/",source:"https://www.justwatch.com/"}
+{title:"The Last Horizon",language:"English",year:2025,rating:"8.1"},
+{title:"নীল আকাশ",language:"Bangla",year:2025,rating:"7.8"},
+{title:"Mumbai Stories",language:"Hindi",year:2024,rating:"7.6"},
+{title:"Seoul Days",language:"Korean",year:2024,rating:"8.0"},
+{title:"Southern Star",language:"South Indian",year:2025,rating:"7.9"},
+{title:"Little Cloud",language:"Animation",year:2025,rating:"8.3"}
 ];
-let category="All";const grid=document.querySelector("#grid"),search=document.querySelector("#search"),dlg=document.querySelector("#details");
-function render(){const q=search.value.toLowerCase();const found=movies.filter(m=>(category==="All"||m.language===category)&&m.title.toLowerCase().includes(q));document.querySelector("#count").textContent=found.length+" titles";grid.innerHTML=found.map((m,i)=>'<article class="card" data-index="'+movies.indexOf(m)+'"><div class="poster">'+m.title+'</div><div class="meta"><strong>'+m.title+'</strong><span class="muted">'+m.language+' · '+m.year+'</span><br><span class="pill">★ '+m.rating+'/10</span></div></article>').join("");grid.querySelectorAll(".card").forEach(c=>c.addEventListener("click",()=>{location.href="details.html?id="+c.dataset.index}))}
-function show(m){document.querySelector("#detailBody").innerHTML='<div class="tag">'+m.language+' · '+m.year+'</div><h2>'+m.title+'</h2><p class="muted">★ '+m.rating+'/10 · '+m.genre+'</p><p><b>Director:</b> '+m.director+'</p><p><b>Cast:</b> '+m.cast+'</p><p><b>Storyline:</b> '+m.story+'</p><div class="detail-actions"><a href="'+m.trailer+'" target="_blank" rel="noopener"><button class="primary">Official trailer</button></a><a href="'+m.source+'" target="_blank" rel="noopener"><button>Find legal streaming</button></a></div><div class="notice">Only use official trailers and authorized streaming/download providers. No unauthorized movie files are hosted here.</div>';dlg.showModal()}
-document.querySelectorAll("[data-cat]").forEach(b=>b.addEventListener("click",()=>{category=b.dataset.cat;document.querySelectorAll("[data-cat]").forEach(x=>x.classList.toggle("active",x===b));render()}));
-search.addEventListener("input",render);document.querySelector("#close").addEventListener("click",()=>dlg.close());document.querySelector("#year").textContent=new Date().getFullYear();render();
+let category="All";
+const grid=document.getElementById("grid"),search=document.getElementById("search"),empty=document.getElementById("empty");
+function render(){
+ const q=search.value.trim().toLocaleLowerCase();
+ const found=movies.map((m,index)=>({...m,index})).filter(m=>(category==="All"||m.language===category)&&m.title.toLocaleLowerCase().includes(q));
+ document.getElementById("count").textContent=found.length+" sample titles";
+ grid.innerHTML=found.map(m=>'<a class="card" href="details.html?id='+m.index+'" aria-label="View details for '+m.title+'"><div class="poster"><span class="poster-title">'+m.title+'</span></div><div class="meta"><strong>'+m.title+'</strong><div class="meta-line"><span class="muted">'+m.language+'</span><span class="muted">'+m.year+'</span></div><span class="pill">★ '+m.rating+'/10</span></div></a>').join("");
+ empty.style.display=found.length?"none":"block";
+}
+document.querySelectorAll("[data-cat]").forEach(button=>button.addEventListener("click",()=>{
+ category=button.dataset.cat;
+ document.querySelectorAll("[data-cat]").forEach(item=>item.classList.toggle("active",item===button));
+ render();
+}));
+search.addEventListener("input",render);
+document.getElementById("year").textContent=new Date().getFullYear();
+render();
 </script>
-</body></html>
+</body>
+</html>

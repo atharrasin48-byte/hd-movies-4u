@@ -18,7 +18,13 @@ h1{font-size:clamp(28px,5vw,42px);line-height:1.12;margin:8px 0 12px}.tag{color:
 h2{font-size:21px;margin:0 0 13px}.votes{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.vote{background:#232630;border:1px solid #383c47;border-radius:12px;padding:14px 8px;text-align:center}.vote strong{display:block;font-size:17px}.vote small{color:var(--muted)}
 .bar{height:8px;background:#30343d;border-radius:9px;overflow:hidden;margin-top:8px}.bar i{display:block;height:100%;background:var(--green);width:0}
 .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.shot{height:110px;border-radius:10px;background:linear-gradient(135deg,#293447,#3d2632);display:grid;place-items:center;color:#c8ccd5;font-size:13px;text-align:center;padding:8px}
-.notice{border:1px solid #594b28;background:#292416;color:#f0dca5;padding:12px;border-radius:10px;font-size:13px}
+.notice{border:1px solid #594b28;background:#292416;color:#f0dca5;padding:12px;border-radius:10px}
+.download-panel{background:#202329;border:1px solid #30343c;border-radius:13px;padding:14px}
+.download-heading{text-align:center;color:#f2c84b;font-size:clamp(22px,5vw,32px);font-weight:900;margin:0 0 16px}
+.download-list{display:grid;gap:12px}
+.download-link{display:flex;justify-content:center;align-items:center;gap:9px;text-align:center;background:#3d464f;color:#16e5f2;border-radius:10px;padding:17px 12px;font-size:clamp(15px,3.5vw,20px);font-weight:900;border:1px solid #48525c}
+.download-link:active{transform:scale(.99)}
+.download-empty{color:#b9bec6;text-align:center;padding:18px 8px;font-size:14px}
 @media(max-width:650px){.hero{grid-template-columns:1fr}.poster{min-height:250px}.votes{grid-template-columns:1fr}.gallery{grid-template-columns:repeat(2,1fr)}}
 </style></head><body>
 <header class="wrap top"><a class="logo" href="movies.html">HD <b>MOVIES</b> 4U</a><a class="btn" href="movies.html">← Back to catalogue</a></header>
@@ -27,7 +33,7 @@ h2{font-size:21px;margin:0 0 13px}.votes{display:grid;grid-template-columns:repe
 <section class="panel"><h2>Community Verdict</h2><p class="muted">Cast your opinion on this sample title. One vote per browser for this demo.</p><div class="votes" id="votes"></div><p class="muted" id="voteTotal"></p></section>
 <section class="panel"><h2>Screenshots Gallery</h2><div class="gallery"><div class="shot">Screenshot placeholder 01</div><div class="shot">Screenshot placeholder 02</div><div class="shot">Screenshot placeholder 03</div></div><p class="muted">Add only screenshots you own or are authorized to publish.</p></section>
 <section class="panel"><h2>Watch Online</h2><p class="muted">The official viewing source will appear here when an authorized provider link is added.</p><p class="notice">No movie file is hosted on this demo page. Use only official and rights-holder-authorized viewing or download links.</p><div class="actions"><a class="btn red" href="https://www.justwatch.com/" target="_blank" rel="noopener">Find an authorized provider</a></div></section>
-<section class="panel"><h2>Episodes / Downloads</h2><p class="muted">For series, episode lists and authorized resolution options (480p, 720p, 1080p or 4K) can be managed here after verified links are supplied.</p></section>
+<section class="panel"><h2>Episodes / Downloads</h2><p class="muted">Available resolutions and file sizes are different for every title. Only verified, authorized files will be listed here.</p><div class="download-panel"><h3 class="download-heading">👇 DOWNLOAD LINKS 👇</h3><div class="download-list" id="downloadList"></div></div></section>
 </main>
 <script>
 const demo=[
@@ -38,10 +44,16 @@ const demo=[
 {title:"Southern Star",language:"South Indian",year:"2025",type:"Movie",quality:"Demo",resolution:"—",status:"Completed",summary:"A fictional sample entry for the South Indian category."},
 {title:"Little Cloud",language:"Animation",year:"2025",type:"Movie",quality:"Demo",resolution:"—",status:"Completed",summary:"A fictional sample animated title."}
 ];
+// Add one entry per authorized file: {quality:"720p", size:"1.1 GB", url:"https://..."}
+// Each title can have different sizes and available resolutions. Never enter estimated sizes.
+demo.forEach(item=>{item.downloads=[]});
 const id=Math.max(0,Math.min(demo.length-1,Number(new URLSearchParams(location.search).get("id"))||0));
 const m=demo[id];document.title=m.title+" — HD MOVIES 4U";
 document.querySelector("#title").textContent=m.title;document.querySelector("#poster").textContent=m.title;document.querySelector("#summary").textContent=m.summary;
 document.querySelector("#facts").innerHTML=[m.year,m.type,m.status,m.language,m.quality,m.resolution].map(x=>'<span>'+x+'</span>').join("");
+const downloadList=document.querySelector("#downloadList");
+const availableDownloads=(m.downloads||[]).filter(d=>d.quality&&d.size&&d.url);
+downloadList.innerHTML=availableDownloads.length?availableDownloads.map(d=>'<a class="download-link" href="'+d.url.replace(/&/g,"&amp;").replace(/"/g,"%22")+'" target="_blank" rel="noopener noreferrer">☁ Download ['+d.quality+' • '+d.size+'] ☁</a>').join(""):'<div class="download-empty">No authorized download links available yet.</div>';
 const key="hdm4u-vote-"+id, votes=JSON.parse(localStorage.getItem(key)||'{"Must Watch":0,"Good":0,"Average":0}'), chosen=localStorage.getItem(key+"-choice");
 function renderVotes(){const total=Object.values(votes).reduce((a,b)=>a+b,0);document.querySelector("#votes").innerHTML=Object.entries(votes).map(([name,n])=>'<button class="vote" data-vote="'+name+'" '+(chosen?'disabled':'')+'><strong>'+name+'</strong><small>'+((total?Math.round(n/total*100):0))+'% · '+n+' votes</small><div class="bar"><i style="width:'+(total?n/total*100:0)+'%"></i></div></button>').join("");document.querySelector("#voteTotal").textContent=total+" total votes"+(chosen?" · Your vote: "+chosen:"");document.querySelectorAll("[data-vote]").forEach(b=>b.addEventListener("click",()=>{if(localStorage.getItem(key+"-choice"))return;votes[b.dataset.vote]++;localStorage.setItem(key,JSON.stringify(votes));localStorage.setItem(key+"-choice",b.dataset.vote);location.reload()}))}
 renderVotes();

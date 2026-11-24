@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://hd-movies-4u.pages.dev/sitemap.xml

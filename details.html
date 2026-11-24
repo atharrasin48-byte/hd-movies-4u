@@ -31,7 +31,7 @@ h2{font-size:21px;margin:0 0 13px}.votes{display:grid;grid-template-columns:repe
 <main class="wrap">
 <section class="hero"><div class="poster" id="poster">HD MOVIES 4U</div><div><div class="tag">TITLE INFORMATION</div><h1 id="title">Loading title…</h1><p class="muted" id="summary">Sample title details page.</p><div class="info" id="facts"></div><div class="actions"><button class="red" id="watchlist">＋ My List</button><button id="share">Share</button></div></div></section>
 <section class="panel"><h2>Community Verdict</h2><p class="muted">Cast your opinion on this sample title. One vote per browser for this demo.</p><div class="votes" id="votes"></div><p class="muted" id="voteTotal"></p></section>
-<section class="panel"><h2>Screenshots Gallery</h2><div class="gallery"><div class="shot">Screenshot placeholder 01</div><div class="shot">Screenshot placeholder 02</div><div class="shot">Screenshot placeholder 03</div></div><p class="muted">Add only screenshots you own or are authorized to publish.</p></section>
+<section class="panel"><h2>Movie Screenshots</h2><p class="muted">A preview of scenes from this title.</p><div class="gallery" id="screenshots"></div><p class="muted">Only add screenshots you own or are authorized to publish.</p></section>
 <section class="panel"><h2>Watch Online</h2><p class="muted">The official viewing source will appear here when an authorized provider link is added.</p><p class="notice">No movie file is hosted on this demo page. Use only official and rights-holder-authorized viewing or download links.</p><div class="actions"><a class="btn red" href="https://www.justwatch.com/" target="_blank" rel="noopener">Find an authorized provider</a></div></section>
 <section class="panel"><h2>Episodes / Downloads</h2><p class="muted">Available resolutions and file sizes are different for every title. Only verified, authorized files will be listed here.</p><div class="download-panel"><h3 class="download-heading">👇 DOWNLOAD LINKS 👇</h3><div class="download-list" id="downloadList"></div></div></section>
 </main>
@@ -46,9 +46,12 @@ const demo=[
 ];
 // Add one entry per authorized file: {quality:"720p", size:"1.1 GB", url:"https://..."}
 // Each title can have different sizes and available resolutions. Never enter estimated sizes.
-demo.forEach(item=>{item.downloads=[]});
+demo.forEach(item=>{item.downloads=[];item.screenshots=[]});
 const id=Math.max(0,Math.min(demo.length-1,Number(new URLSearchParams(location.search).get("id"))||0));
 const m=demo[id];document.title=m.title+" — HD MOVIES 4U";
+const screenshotBox=document.querySelector("#screenshots");
+const screenshotUrls=(m.screenshots||[]).filter(Boolean).slice(0,4);
+screenshotBox.innerHTML=screenshotUrls.length?screenshotUrls.map((url,i)=>'<img class="shot" src="'+url.replace(/"/g,"%22")+'" alt="'+m.title+' screenshot '+(i+1)+'" loading="lazy" style="width:100%;height:130px;object-fit:cover">').join(""):[1,2,3,4].map(i=>'<div class="shot">Screenshot '+String(i).padStart(2,"0")+'</div>').join("");
 document.querySelector("#title").textContent=m.title;document.querySelector("#poster").textContent=m.title;document.querySelector("#summary").textContent=m.summary;
 document.querySelector("#facts").innerHTML=[m.year,m.type,m.status,m.language,m.quality,m.resolution].map(x=>'<span>'+x+'</span>').join("");
 const downloadList=document.querySelector("#downloadList");
